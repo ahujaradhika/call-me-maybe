@@ -20,7 +20,13 @@ def worker():
     latitude = request.values['location_data[latitude]']
     longitude = request.values['location_data[longitude]']
 
-    return latitude, longitude
+    print(type(latitude))
+    print(type(longitude))
+
+    location_info = latitude + ',' + longitude
+    print(location_info)
+
+    return location_info
 
 def location_data():
     latitude, longitude = worker()
