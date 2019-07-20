@@ -22,6 +22,11 @@ def worker():
 
     return latitude, longitude
 
+def location_data():
+    latitude, longitude = worker()
+
+    return latitude, longitude
+
 # run the development server
 if __name__ == "__main__":
     app.run("0.0.0.0", "5000")
