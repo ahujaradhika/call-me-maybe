@@ -20,7 +20,7 @@ def worker():
     latitude = request.values['location_data[latitude]']
     longitude = request.values['location_data[longitude]']
 
-    return render_template("index.html", latitude=latitude, longitude=longitude)
+    return latitude, longitude
 
 # run the development server
 if __name__ == "__main__":
