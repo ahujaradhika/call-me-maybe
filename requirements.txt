@@ -1,0 +1,6 @@
+Flask==1.0.2
+tox==3.5.3
+twilio==6.21.0
+herepy
+json
+requests
