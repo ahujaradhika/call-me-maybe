@@ -1,4 +1,4 @@
-#!/Users/aashitapatwari/Desktop/clicktocall-flask/venv/bin/python
+#!/Users/aashitapatwari/clicktocall-flask/venv/bin/python
 
 import sys
 import getopt
