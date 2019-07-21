@@ -10,23 +10,25 @@ import herepy
 import json
 import requests
 
-geocoderApi = herepy.GeocoderApi('rTc2ExgvmtXRk5fJG3IB', 'HwAH1Q70PPoaHB-hqswuHQ')
-geocoderReverseApi = herepy.GeocoderReverseApi('rTc2ExgvmtXRk5fJG3IB', 'HwAH1Q70PPoaHB-hqswuHQ')
-response = requests.get('https://places.cit.api.here.com/places/v1/autosuggest?at=37.787541999999995,-122.4109585&q=police&station&app_id=rTc2ExgvmtXRk5fJG3IB&app_code=HwAH1Q70PPoaHB-hqswuHQ')
+def get_phone_number():
+    loc = worker()
+    geocoderApi = herepy.GeocoderApi('rTc2ExgvmtXRk5fJG3IB', 'HwAH1Q70PPoaHB-hqswuHQ')
+    geocoderReverseApi = herepy.GeocoderReverseApi('rTc2ExgvmtXRk5fJG3IB', 'HwAH1Q70PPoaHB-hqswuHQ')
+    response = requests.get('https://places.cit.api.here.com/places/v1/autosuggest?at=37.787541999999995,-122.4109585&q=police&station&app_id=rTc2ExgvmtXRk5fJG3IB&app_code=HwAH1Q70PPoaHB-hqswuHQ')
 
-parsed = json.loads(response.text)
+    parsed = json.loads(response.text)
 
-url = parsed['results'][0]['href']
-response2 = requests.get(url)
-parsed2 = json.loads(response2.text)
-station_url = parsed2['results']['items'][0]['href']
+    url = parsed['results'][0]['href']
+    response2 = requests.get(url)
+    parsed2 = json.loads(response2.text)
+    station_url = parsed2['results']['items'][0]['href']
 
-response3 = requests.get(station_url)
-parsed3 = json.loads(response3.text)
-phoneNumber = parsed3['contacts']['phone'][0]['value']
-print(phoneNumber)
-phoneNumber = '747-334-9366'
-print(phoneNumber)
+    response3 = requests.get(station_url)
+    parsed3 = json.loads(response3.text)
+    phoneNumber = parsed3['contacts']['phone'][0]['value']
+    print(phoneNumber)
+    # phoneNumber = '747-334-9366'
+    # print(phoneNumber)
 
 # Declare and configure application
 app = Flask(__name__, static_url_path='/static')
@@ -78,6 +80,24 @@ def outbound():
     response.number("+16518675309")
     '''
     return str(response)
+
+# receiver
+@app.route('/receiver', methods = ['POST'])
+def worker():
+	# read json + reply
+    data = request.form.get('location_data')
+    print(data)
+    
+    latitude = request.values['location_data[latitude]']
+    longitude = request.values['location_data[longitude]']
+
+    print(type(latitude))
+    print(type(longitude))
+
+    location_info = latitude + ',' + longitude
+    print(location_info)
+
+    return location_info
 
 
 # Route for Landing Page after Heroku deploy.
